@@ -1,0 +1,132 @@
+{
+  "main_title": "Tamil Nadu Association of Senior Professionals of Environment and Forests",
+
+  "forest_message": "Working Together to Protect and Conserve Tamil Nadu Forests",
+
+  "view_more": "View More",
+
+  "our_services": "Our Services",
+  "latest_updates": "Latest Updates",
+
+  "e_magazine": "E-Magazine",
+  "e_magazine_desc": "Access our digital magazine \"Namadhu Vanam\" with articles on forest conservation and wildlife.",
+
+  "office_bearers": "Office Bearers",
+  "office_bearers_desc": "Meet our leadership team and executive committee members dedicated to environmental conservation.",
+
+  "our_members": "Our Members",
+  "our_members_desc": "Browse our member directory and connect with fellow professionals in environment and forests.",
+
+  "agm_title": "Annual General Meeting 2024",
+  "agm_desc": "The AGM was held successfully with important decisions regarding forest conservation initiatives.",
+
+  "magazine_release": "New E-Magazine Issue Released",
+  "magazine_release_desc": "Issue 12 of Namadhu Vanam is now available featuring articles on wildlife conservation.",
+
+  "wildlife_title": "Wildlife Conservation",
+  "wildlife_desc": "Leading strategic efforts to monitor, protect and restore critical habitats for Tamil Nadu’s endangered species and biodiversity.",
+
+  "join_title": "Join Us in Protecting Our Forests",
+  "join_desc": "Become a member of TASPEF and contribute to the conservation of Tamil Nadu's natural heritage.",
+
+  "become_member": "Become a Member",
+
+  "org_name": "Tamil Nadu Association of Senior Professionals of Environment and Forests",
+  "org_short": "TASPEF",
+  "reg_no": "REGN. NO. 270/2007 DATED 10.09.2007",
+
+  "patron_label": "PATRON",
+  "principal_role": "Principal Chief Conservator of Forests (HoFF), Tamil Nadu Forest Department.",
+
+  "executive_president": "Executive President",
+  "general_secretary": "General Secretary",
+  "vice_president": "Vice President",
+  "joint_secretary": "Joint Secretary",
+  "treasurer": "Treasurer",
+
+  "executive_committee": "EXECUTIVE COMMITTEE MEMBERS",
+
+  "name_reddy": "Thiru. Srinivas R. Reddy, I.F.S.",
+  "name_prabhakaran": "Mr V. Prabhakaran",
+  "name_arun": "Mr D. Arun",
+  "name_deepalingam": "Mr S. Deepalingam",
+  "name_sivagurunathan": "Mr G. Sivagurunathan",
+  "name_velumani": "Mr S. Velumani",
+
+  "name_paulraj": "Dr S. Paulraj",
+  "name_kandasamy": "Dr V.T. Kandasamy",
+  "name_ulaganathan": "Mr A.K. Ulaganathan",
+  "name_nadhan": "Mr L. Nadhan",
+  "name_palanichamy": "Mr S. Palanichamy",
+  "name_dhandayuthapani": "Mr S. Dhandayuthapani",
+  "name_ramprasath": "Mr G. Ramprasath",
+  "name_anbalagan": "Mr M. Anbalagan",
+  "name_arumugam": "Mr K. Arumugam",
+  "name_ramachandran": "Mr P. Ramachandran",
+  "name_mohanram": "Mr A. S. Mohanram",
+
+  "agm_reports": "AGM Reports",
+  "loading": "Loading...",
+  "no_reports": "No reports found.",
+  "view_report": "View Report",
+  "download": "Download",
+
+  "e_magazines_title": "Namathu Vanam E-Magazines",
+  "editorial_board": "Editorial Board",
+
+  "editor": "Editor",
+  "member": "Member",
+
+  "prabhakaran": "Thiru V. Prabhakaran IFS.,",
+  "role_prabhakaran": "APCCF Retd.",
+
+  "arun": "Thiru D. Arun, IFS.,",
+  "role_arun": "CF Retd.",
+
+  "paulraj": "Thiru Dr. S. Paulraj, IFS.,",
+  "role_paulraj": "CF Retd.",
+
+  "ramprasad": "Thiru G. Ramprasad, AD",
+  "role_ramprasad": "(Statistics) Retd.",
+
+  "sivagurunathan": "Thiru G. Sivagurunathan, ACF",
+  "role_sivagurunathan": "Retd.",
+
+  "sort_by": "Sort By:",
+  "latest_issue": "Latest Issue",
+  "previous_issue": "Previous Issue",
+
+  "view": "View",
+
+  "no_previous_issues": "No previous issues found.",
+
+  "download_error": "File not available on server (see console).",
+  "download_invalid": "Server did not return a PDF. Check console for details.",
+  "download_failed": "Download failed. See console for details.",
+
+  "gallery_title": "Gallery",
+
+  "back_to_categories": "Back to Categories",
+
+  "photos": "photos",
+
+  "no_photos": "No photos found for",
+
+  "gallery_alt": "Gallery",
+  "new_arrivals": "New Arrivals",
+  "meetings": "Meetings",
+  "wild_life": "Wild Life",
+
+  "s_no": "S.No.",
+  "name": "Name",
+  "subscription": "Subscription",
+  "joining_date": "Joining Date",
+  "contact_number": "Contact Number",
+  "form_title": "FORM NO VI - Register of members to be maintained under sub-section (1) of section 14 of the Tamil Nadu Societies Registration Act, 1975 (Tamil Nadu Act 27 of 1975)",
+
+  "register_of_members": "REGISTER OF MEMBERS",
+  "society_name_label": "Name and address of the society:",
+  "society_name_value": "Tamil Nadu Association of Senior Professionals of Environment and Forests",
+  "registration_date": "Date of Registration:",
+  "members_list_title": "LIST OF LIFE MEMBERS AS ON 22.09.2024"
+}
