@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import { gsap } from "gsap";
@@ -11,6 +12,7 @@ import FloatingQuizButton from "../components/FloatingQuizButton";
 import HERO_IMAGES from "../data/heroImages";
 
 const Home = () => {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
@@ -218,7 +220,7 @@ const Home = () => {
           </p>
 
           <button
-            onClick={() => (window.location.href = "/gallery")}
+            onClick={() => navigate("/gallery")}
             className="px-6 py-3 rounded-md border border-white bg-white/10 text-white hover:bg-white hover:text-green-700 transition-all text-lg mt-[140px]"
           >
             {t("view_more")}
