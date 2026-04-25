@@ -7,7 +7,7 @@ const FloatingBar = () => {
   return (
     <div
       onClick={() =>
-        navigate("/gallery", { state: { autoFilter: "new arrivals" } })
+        navigate("/gallery", { state: { autoFilter: "new_arrivals" } })
       }
       className="fixed right-2 top-1/2 -translate-y-1/2 z-[100] cursor-pointer drop-shadow-2xl hover:scale-110 transition-transform"
     >

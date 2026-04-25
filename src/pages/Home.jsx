@@ -4,6 +4,11 @@ import Button from "../components/Button";
 import { gsap } from "gsap";
 import FloatingBar from "../components/FloatingBar";
 import { useTranslation } from "react-i18next";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import FloatingQuizButton from "../components/FloatingQuizButton";
+import HERO_IMAGES from "../data/heroImages";
 
 const Home = () => {
   const { t, i18n } = useTranslation();
@@ -168,19 +173,33 @@ const Home = () => {
   return (
     <div>
       <FloatingBar />
+      <FloatingQuizButton />
 
       {/* HERO */}
       <section className="relative w-full min-h-[80vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden">
-        <video
-          className="absolute inset-0 w-full h-full object-cover -z-20"
-          src="/assets/images/Hero-1.mp4"
-          autoPlay
+        {/* 🌄 IMAGE SLIDER */}
+        <Swiper
+          modules={[Autoplay]}
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
           loop
-          muted
-          playsInline
-        />
+          speed={1000}
+          className="absolute inset-0 w-full h-full -z-20"
+        >
+          {HERO_IMAGES.map((img, i) => (
+            <SwiperSlide key={i}>
+              <img
+                src={img}
+                className="w-full h-full object-cover"
+                alt={`slide-${i}`}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* 🌫️ OVERLAY */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-green-900/40 to-transparent z-10" />
 
+        {/* 💬 CONTENT */}
         <div className="relative z-20 text-center px-4">
           <h1
             ref={titleRef}
@@ -204,7 +223,6 @@ const Home = () => {
           </button>
         </div>
       </section>
-
       {/* FEATURES */}
       <section className="py-16 md:py-24 bg-background-light">
         <div className="container">
