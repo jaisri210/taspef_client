@@ -27,6 +27,8 @@ const Home = () => {
 
     const text = el.textContent || "";
     const frag = document.createDocumentFragment();
+    //test
+    console.log(text);
 
     const segmenter = new Intl.Segmenter("ta", {
       granularity: "grapheme",
