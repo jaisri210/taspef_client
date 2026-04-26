@@ -139,7 +139,7 @@ const Header = () => {
     { name: "Members", href: "/members", icon: "members" },
     {
       name: "2024 - TASPEF Directory",
-      href: "/public/IFS new directory - final - 30-04-24 (1).pdf",
+      href: "/IFS_Directory.pdf",
       target: "_blank", // safer filename recommended
       external: true,
       icon: "directory",
