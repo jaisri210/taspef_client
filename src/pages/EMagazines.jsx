@@ -5,7 +5,7 @@ import EditorialBoard from "../components/EditorialBoard";
 import { useTranslation } from "react-i18next";
 
 // Mock data (adjust fileUrl to match public folder: /assets or /uploads)
-const MAGAZINES = Array.from({ length: 11 }).map((_, i) => {
+const MAGAZINES = Array.from({ length: 12 }).map((_, i) => {
   const n = i + 1;
   return {
     _id: String(n),
@@ -78,9 +78,9 @@ export default function EMagazines() {
   };
 
   // derived sets
-  const latestIssue = mags.find((m) => m._id === "11");
+  const latestIssue = mags.find((m) => m._id === "12");
   const previousIssues = mags
-    .filter((m) => m._id !== "11")
+    .filter((m) => m._id !== "12")
     .sort((a, b) => Number(b._id) - Number(a._id));
 
   return (

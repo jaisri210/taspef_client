@@ -140,7 +140,7 @@ const Header = () => {
     {
       name: "2024 - TASPEF Directory",
       href: "/IFS_Directory.pdf",
-      target: "_blank", // safer filename recommended
+      target: "_blank",
       external: true,
       icon: "directory",
     },
