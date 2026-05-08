@@ -163,7 +163,7 @@ export default function Members() {
           </table>
         </div>
       </div>
-      /*mobile card view table*/
+      {/*mobile card view table*/}
       <div className="md:hidden space-y-4 p-4">
         {members.map((m, idx) => (
           <div
@@ -202,7 +202,7 @@ export default function Members() {
         ))}
       </div>
       {/* small footer note */}
-      <div className="mt-4 text-xs text-slate-500">* {t("contact_note")}</div>
+      <div className="mt-4 text-xs text-slate-500"> {t("contact_note")}</div>
     </div>
   );
 }
