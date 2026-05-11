@@ -1,10 +1,10 @@
 // client/src/components/Header.jsx
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import i18n from "i18next";
 
 const Icon = ({ name, className = "w-4 h-4 inline-block mr-2" }) => {
-  // simple small icons (Home, Users, Reports, Book, Members, Folder)
   switch (name) {
     case "home":
       return (
@@ -22,6 +22,7 @@ const Icon = ({ name, className = "w-4 h-4 inline-block mr-2" }) => {
           />
         </svg>
       );
+
     case "office":
       return (
         <svg
@@ -38,6 +39,7 @@ const Icon = ({ name, className = "w-4 h-4 inline-block mr-2" }) => {
           />
         </svg>
       );
+
     case "reports":
       return (
         <svg
@@ -54,6 +56,7 @@ const Icon = ({ name, className = "w-4 h-4 inline-block mr-2" }) => {
           />
         </svg>
       );
+
     case "magazine":
       return (
         <svg
@@ -70,6 +73,7 @@ const Icon = ({ name, className = "w-4 h-4 inline-block mr-2" }) => {
           />
         </svg>
       );
+
     case "members":
       return (
         <svg
@@ -86,6 +90,7 @@ const Icon = ({ name, className = "w-4 h-4 inline-block mr-2" }) => {
           />
         </svg>
       );
+
     case "directory":
       return (
         <svg
@@ -102,6 +107,7 @@ const Icon = ({ name, className = "w-4 h-4 inline-block mr-2" }) => {
           />
         </svg>
       );
+
     case "gallery":
       return (
         <svg
@@ -118,6 +124,7 @@ const Icon = ({ name, className = "w-4 h-4 inline-block mr-2" }) => {
           />
         </svg>
       );
+
     default:
       return null;
   }
@@ -148,46 +155,45 @@ const Header = () => {
   ];
 
   const isActive = (href) => location.pathname === href;
-  //language switch button function
+
   const changeLang = (lang) => {
     i18n.changeLanguage(lang);
     localStorage.setItem("lang", lang);
   };
+
   return (
     <header className="sticky top-0 z-40">
-      {/* Top bar: logo left, title centered */}
+      {/* Top Header */}
       <div className="bg-white">
-        <div className="container h-28 mx-auto px-4 py-3 flex items-center justify-between">
-          {/* logo */}
-          <div className="flex items-center">
+        <div className="container mx-auto px-4 py-3 h-28 flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center shrink-0">
             <img
               src="/assets/images/taspef-logo.png"
               alt="TASPEF"
-              className="w-18 h-18 rounded-full object-contain"
+              className="w-16 h-16 md:w-18 md:h-18 rounded-full object-contain"
             />
           </div>
 
-          {/* centered title */}
-          <div className="flex-1 text-center">
-            <h1 className="text-green-800 font-bold text-lg md:text-3xl">
+          {/* Title */}
+          <div className="flex-1 text-center px-2">
+            <h1 className="text-green-800 font-bold text-lg md:text-3xl leading-snug">
               Protect Forest and Conserve Wildlife
             </h1>
           </div>
 
-          {/* empty spacer to keep title centered */}
-          <div className="w-12 h-12" />
+          {/* Spacer */}
+          <div className="w-12 h-12 shrink-0" />
         </div>
       </div>
 
-      {/* Green nav bar */}
+      {/* Navigation */}
       <div className="bg-green-900">
         <div className="container mx-auto px-4">
-          {/* <div className="flex items-center justify-center"> */}
-          {/* <div className="flex items-center justify-between w-full"> */}
-          {/* Desktop nav (centered) */}
-          {/* <nav className="hidden md:flex items-center gap-6 lg:gap-10 whitespace-nowrap"> */}
-          <div className="flex-1 flex justify-center">
-            <nav className="hidden md:flex items-center gap-6 lg:gap-10 whitespace-nowrap">
+          {/* Desktop + Tablet */}
+          <div className="hidden lg:flex items-center justify-between w-full py-2 gap-4">
+            {/* Navigation Links */}
+            <nav className="flex items-center gap-3 lg:gap-5 flex-1 min-w-0 overflow-x-auto scrollbar-hide whitespace-nowrap">
               {navigation.map((item) =>
                 item.external ? (
                   <a
@@ -195,74 +201,91 @@ const Header = () => {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-3 py-2 rounded text-white text-sm lg:text-base hover:bg-green-700 transition-colors"
+                    className="inline-flex items-center px-2 lg:px-3 py-2 rounded text-white text-xs lg:text-sm hover:bg-green-700 transition-colors whitespace-nowrap"
                   >
                     <Icon name={item.icon} />
-                    <span className="hidden lg:inline">{item.name}</span>
-                    <span className="lg:hidden">{item.name}</span>
+                    <span>{item.name}</span>
                   </a>
                 ) : (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`inline-flex items-center px-3 py-2 rounded text-white text-sm lg:text-base transition-colors ${
+                    className={`inline-flex items-center px-2 lg:px-3 py-2 rounded text-white text-xs lg:text-sm transition-colors whitespace-nowrap ${
                       isActive(item.href)
-                        ? "bg-green-700 text-green-700"
+                        ? "bg-green-700"
                         : "hover:bg-green-700"
                     }`}
                     aria-current={isActive(item.href) ? "page" : undefined}
                   >
                     <Icon name={item.icon} />
-                    <span className="hidden lg:inline">{item.name}</span>
-                    <span className="lg:hidden">{item.name}</span>
+                    <span>{item.name}</span>
                   </Link>
                 ),
               )}
-              {/* language switch button */}
-              <div className="hidden md:flex items-center gap-2 ml-4">
-                <button
-                  onClick={() => changeLang("en")}
-                  className="px-2 py-1 text-xs bg-white text-green-900 rounded"
-                >
-                  EN
-                </button>
-
-                <button
-                  onClick={() => changeLang("ta")}
-                  className="px-2 py-1 text-xs bg-white text-green-900 rounded"
-                >
-                  தமிழ்
-                </button>
-              </div>
             </nav>
 
-            {/* Hamburger on small screens */}
-            <div className="md:hidden flex items-center">
+            {/* Language Buttons */}
+            <div className="flex items-center gap-2 shrink-0">
               <button
-                onClick={() => setMobileOpen((s) => !s)}
-                className="p-2 rounded text-white hover:bg-green-700"
-                aria-label="Toggle menu"
+                onClick={() => changeLang("en")}
+                className="px-2 py-1 text-xs bg-white text-green-900 rounded hover:bg-gray-100"
               >
-                <svg
-                  className="w-6 h-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
+                EN
+              </button>
+
+              <button
+                onClick={() => changeLang("ta")}
+                className="px-2 py-1 text-xs bg-white text-green-900 rounded hover:bg-gray-100"
+              >
+                தமிழ்
               </button>
             </div>
           </div>
 
-          {/* Mobile nav (dropdown) */}
+          {/* Mobile Header */}
+          <div className="lg:hidden flex items-center justify-between py-2">
+            {/* Hamburger */}
+            <button
+              onClick={() => setMobileOpen((s) => !s)}
+              className="p-2 rounded text-white hover:bg-green-700"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
+            {/* Mobile Language Buttons */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => changeLang("en")}
+                className="px-2 py-1 text-xs bg-white text-green-900 rounded"
+              >
+                EN
+              </button>
+
+              <button
+                onClick={() => changeLang("ta")}
+                className="px-2 py-1 text-xs bg-white text-green-900 rounded"
+              >
+                தமிழ்
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Dropdown */}
           {mobileOpen && (
-            <div className="md:hidden py-2">
+            <div className="lg:hidden py-2">
               <nav className="flex flex-col gap-1">
                 {navigation.map((item) =>
                   item.external ? (
@@ -291,19 +314,6 @@ const Header = () => {
                     </Link>
                   ),
                 )}
-                <button
-                  onClick={() => changeLang("en")}
-                  className="px-2 py-1 text-xs bg-white text-green-900 rounded"
-                >
-                  EN
-                </button>
-
-                <button
-                  onClick={() => changeLang("ta")}
-                  className="px-2 py-1 text-xs bg-white text-green-900 rounded"
-                >
-                  தமிழ்
-                </button>
               </nav>
             </div>
           )}
