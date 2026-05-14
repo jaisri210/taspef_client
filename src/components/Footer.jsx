@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -20,44 +21,44 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="text-gray-200 hover:text-white transition-colors duration-200"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/office-bearers"
+                <Link
+                  to="/office-bearers"
                   className="text-gray-200 hover:text-white transition-colors duration-200"
                 >
                   Office Bearers
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/agm-reports"
+                <Link
+                  to="/agm-reports"
                   className="text-gray-200 hover:text-white transition-colors duration-200"
                 >
                   AGM Reports
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/e-magazine"
+                <Link
+                  to="/e-magazine"
                   className="text-gray-200 hover:text-white transition-colors duration-200"
                 >
                   E-Magazine
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
                   href="/members"
                   className="text-gray-200 hover:text-white transition-colors duration-200"
                 >
                   Members
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
