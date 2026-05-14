@@ -46,7 +46,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/e-magazine"
+                  to="/e-magazines"
                   className="text-gray-200 hover:text-white transition-colors duration-200"
                 >
                   E-Magazine
@@ -54,7 +54,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/members"
+                  to="/members"
                   className="text-gray-200 hover:text-white transition-colors duration-200"
                 >
                   Members
