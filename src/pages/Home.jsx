@@ -288,7 +288,7 @@ const Home = () => {
         <Button
           variant="secondary"
           size="lg"
-          onClick={() => (window.location.href = "/members")}
+          onClick={() => navigate("/members")}
         >
           {t("become_member")}
         </Button>
