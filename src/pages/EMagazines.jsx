@@ -78,9 +78,9 @@ export default function EMagazines() {
   };
 
   // derived sets
-  const latestIssue = mags.find((m) => m._id === "12");
+  const latestIssue = mags.find((m) => m._id === "13");
   const previousIssues = mags
-    .filter((m) => m._id !== "12")
+    .filter((m) => m._id !== "13")
     .sort((a, b) => Number(b._id) - Number(a._id));
 
   return (
