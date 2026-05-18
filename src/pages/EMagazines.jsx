@@ -5,7 +5,7 @@ import EditorialBoard from "../components/EditorialBoard";
 import { useTranslation } from "react-i18next";
 
 // Mock data (adjust fileUrl to match public folder: /assets or /uploads)
-const MAGAZINES = Array.from({ length: 12 }).map((_, i) => {
+const MAGAZINES = Array.from({ length: 13 }).map((_, i) => {
   const n = i + 1;
   return {
     _id: String(n),
