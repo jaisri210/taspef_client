@@ -49,6 +49,7 @@ export default function AGMReportDetail() {
           Tamilnadu Association of Senior Professionals of Environment and
           Forestry (TASPEF)
         </h1>
+
         <h2 className="text-base md:text-lg text-green-700 font-semibold mb-3">
           {report.title}
         </h2>
@@ -64,107 +65,127 @@ export default function AGMReportDetail() {
             <strong>Venue:</strong> {report.venue}
           </p>
         </div>
-
-        {!report.fileUrl && (
-          <p className="mt-3 text-sm text-gray-500">
-            No PDF available for this report.
-          </p>
-        )}
       </div>
 
-      {/* Meeting Officials */}
-      <section className="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 className="text-lg font-semibold text-green-700 mb-3">
-          Meeting Officials
-        </h3>
-        {report.officials?.length ? (
-          <ul className="list-disc pl-6 text-gray-800 space-y-1">
-            {report.officials.map((o, i) => (
-              <li key={i}>{o}</li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-sm text-gray-500">No officials listed.</p>
-        )}
-      </section>
+      {report.fileUrl ? (
+        <section className="bg-white rounded-lg shadow p-4">
+          <iframe
+            src={`/${report.fileUrl}`}
+            title={report.title}
+            width="100%"
+            height="900"
+            style={{ border: "none" }}
+          />
+        </section>
+      ) : (
+        <>
+          {/* Meeting Officials */}
+          <section className="bg-white rounded-lg shadow p-6 mb-6">
+            <h3 className="text-lg font-semibold text-green-700 mb-3">
+              Meeting Officials
+            </h3>
 
-      {/* Members Present */}
-      <section className="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 className="text-lg font-semibold text-green-700 mb-3">
-          Members Present
-        </h3>
-        {report.members?.length ? (
-          <ul className="list-disc pl-6 text-gray-800 space-y-1">
-            {report.members.map((m, i) => (
-              <li key={i}>{m}</li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-sm text-gray-500">No members listed.</p>
-        )}
-      </section>
+            {report.officials?.length ? (
+              <ul className="list-disc pl-6 text-gray-800 space-y-1">
+                {report.officials.map((o, i) => (
+                  <li key={i}>{o}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-gray-500">No officials listed.</p>
+            )}
+          </section>
 
-      {/* Additional Members Joined */}
-      <section className="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 className="text-lg font-semibold text-green-700 mb-3">
-          Additional Members Joined
-        </h3>
-        {report.additionalMembers?.length ? (
-          <ul className="list-disc pl-6 text-gray-800 space-y-1">
-            {report.additionalMembers.map((m, i) => (
-              <li key={i}>{m}</li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-sm text-gray-500">No additional members listed.</p>
-        )}
-      </section>
+          {/* Members Present */}
+          <section className="bg-white rounded-lg shadow p-6 mb-6">
+            <h3 className="text-lg font-semibold text-green-700 mb-3">
+              Members Present
+            </h3>
 
-      {/* Agenda Items and Resolutions */}
-      <section className="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 className="text-lg font-semibold text-green-700 mb-3">
-          Agenda Items and Resolutions
-        </h3>
-        {report.agenda?.length ? (
-          <div className="space-y-4">
-            {report.agenda.map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-gray-50 p-4 rounded-lg border border-gray-100"
-              >
-                <h4 className="font-semibold mb-2">
-                  {idx + 1}. {item.title}
-                </h4>
-                <p className="text-gray-700 text-sm md:text-base">
-                  {item.resolution}
-                </p>
+            {report.members?.length ? (
+              <ul className="list-disc pl-6 text-gray-800 space-y-1">
+                {report.members.map((m, i) => (
+                  <li key={i}>{m}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-gray-500">No members listed.</p>
+            )}
+          </section>
+
+          {/* Additional Members Joined */}
+          <section className="bg-white rounded-lg shadow p-6 mb-6">
+            <h3 className="text-lg font-semibold text-green-700 mb-3">
+              Additional Members Joined
+            </h3>
+
+            {report.additionalMembers?.length ? (
+              <ul className="list-disc pl-6 text-gray-800 space-y-1">
+                {report.additionalMembers.map((m, i) => (
+                  <li key={i}>{m}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-gray-500">
+                No additional members listed.
+              </p>
+            )}
+          </section>
+
+          {/* Agenda Items and Resolutions */}
+          <section className="bg-white rounded-lg shadow p-6 mb-6">
+            <h3 className="text-lg font-semibold text-green-700 mb-3">
+              Agenda Items and Resolutions
+            </h3>
+
+            {report.agenda?.length ? (
+              <div className="space-y-4">
+                {report.agenda.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-gray-50 p-4 rounded-lg border border-gray-100"
+                  >
+                    <h4 className="font-semibold mb-2">
+                      {idx + 1}. {item.title}
+                    </h4>
+
+                    <p className="text-gray-700 text-sm md:text-base">
+                      {item.resolution}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-sm text-gray-500">No agenda items available.</p>
-        )}
-      </section>
+            ) : (
+              <p className="text-sm text-gray-500">
+                No agenda items available.
+              </p>
+            )}
+          </section>
 
-      {/* Meeting Conclusion */}
-      <section className="bg-white rounded-lg shadow p-6">
-        <h3 className="text-lg font-semibold text-green-700 mb-3">
-          Meeting Conclusion
-        </h3>
-        <p className="text-gray-700">
-          The AGM concluded at 2:00 PM with National Anthem.
-        </p>
-        <div className="mt-4 flex flex-col md:flex-row justify-between">
-          <div>
-            <p className="font-semibold">Dr.V.T.Kandasamy IFS (Retd)</p>
-            <p>President</p>
-          </div>
-          <div className="mt-4 md:mt-0">
-            <p className="font-semibold">D.Arun</p>
-            <p>General Secretary</p>
-          </div>
-        </div>
-      </section>
+          {/* Meeting Conclusion */}
+          <section className="bg-white rounded-lg shadow p-6">
+            <h3 className="text-lg font-semibold text-green-700 mb-3">
+              Meeting Conclusion
+            </h3>
+
+            <p className="text-gray-700">
+              The AGM concluded at 2:00 PM with National Anthem.
+            </p>
+
+            <div className="mt-4 flex flex-col md:flex-row justify-between">
+              <div>
+                <p className="font-semibold">Dr.V.T.Kandasamy IFS (Retd)</p>
+                <p>President</p>
+              </div>
+
+              <div className="mt-4 md:mt-0">
+                <p className="font-semibold">D.Arun</p>
+                <p>General Secretary</p>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 }

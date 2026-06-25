@@ -189,6 +189,21 @@ The General Body members unanimously approved the Committee.
       },
     ],
   },
+  {
+    _id: "3",
+    title: "Minutes of the TASPEF EC Meeting held on 6th June 2026",
+    date: "June 06, 2026",
+    time: "11:00 AM",
+    venue: "IFS Officers Mess, Velachery, Chennai",
+    fileUrl:
+      "assets/Minutes_of_the_TASPEF_EC_meeting_held_on 6th_June_2026_.pdf",
+    originalName: "Minutes_of_the_TASPEF_EC_meeting_held_on_6th_June_2026.pdf",
+    summary: "Minutes of the Executive Committee Meeting held on 06.06.2026.",
+    officials: [],
+    members: [],
+    additionalMembers: [],
+    agenda: [],
+  },
 ];
 
 export default REPORTS;

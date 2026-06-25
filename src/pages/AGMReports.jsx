@@ -36,7 +36,12 @@ export default function AGMReports() {
           )}
 
           {reports.map((r) => (
-            <div key={r._id} className="bg-white p-4 rounded-lg shadow">
+            <div
+              key={r._id}
+              className={`bg-white p-4 rounded-lg shadow transition-all duration-300 ${
+                r._id === "3" ? "border-2 border-green-500 animate-pulse" : ""
+              }`}
+            >
               <h3 className="font-semibold mb-2">{r.title}</h3>
               <p className="text-gray-600 mb-4">{r.date}</p>
 
