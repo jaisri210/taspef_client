@@ -239,6 +239,13 @@ const Header = () => {
               >
                 தமிழ்
               </button>
+
+              <button
+                onClick={() => changeLang("hi")}
+                className="px-2 py-1 text-xs bg-white text-green-900 rounded hover:bg-gray-100"
+              >
+                हिंदी
+              </button>
             </div>
           </div>
 
@@ -279,6 +286,13 @@ const Header = () => {
                 className="px-2 py-1 text-xs bg-white text-green-900 rounded"
               >
                 தமிழ்
+              </button>
+
+              <button
+                onClick={() => changeLang("hi")}
+                className="px-2 py-1 text-xs bg-white text-green-900 rounded"
+              >
+                हिंदी
               </button>
             </div>
           </div>
