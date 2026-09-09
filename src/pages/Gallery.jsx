@@ -1,8 +1,8 @@
-import React, { useMemo, useState, useEffect } from "react"; // Added useEffect
-import { useLocation } from "react-router-dom"; // Added useLocation
+import React, { useMemo, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import GalleryBG from "../components/GalleryBG";
-import manifest from "../data/gallery.json";
 import { useTranslation } from "react-i18next";
+import api, { resolveAssetUrl } from "../services/api";
 
 const Gallery = () => {
   const { t } = useTranslation();
@@ -10,16 +10,16 @@ const Gallery = () => {
   const normalize = (s) =>
     s ? s.toString().toLowerCase().replace(/\s+/g, " ").trim() : "";
 
-  const imageMap = useMemo(() => {
-    const map = {};
-    manifest.forEach((item) => {
-      map[item.file] = `/assets/Gallery/${item.file}`;
-    });
-    return map;
-  }, []);
-
+  const [images, setImages] = useState([]);
   const [filter, setFilter] = useState(null);
   const [selectedImg, setSelectedImg] = useState(null);
+
+  useEffect(() => {
+    api
+      .get("/gallery")
+      .then((data) => setImages(Array.isArray(data) ? data : []))
+      .catch((err) => console.error("Failed to load gallery:", err));
+  }, []);
 
   // ✅ AUTO-FILTER LOGIC: Listens to Floating Bar click
   useEffect(() => {
@@ -31,19 +31,12 @@ const Gallery = () => {
   }, [location.state]);
 
   const items = useMemo(() => {
-    return manifest
-      .map((item) => {
-        const src = imageMap[item.file];
-        const tags = Array.isArray(item.tags)
-          ? item.tags
-          : item.tags
-            ? [item.tags]
-            : [];
-        const normalizedTags = tags.map((t) => normalize(t));
-        return { ...item, src, tags, normalizedTags };
-      })
-      .filter((i) => !!i.src);
-  }, [imageMap]);
+    return images.map((item) => ({
+      ...item,
+      src: resolveAssetUrl(item.imageUrl),
+      normalizedTags: [normalize(item.category)],
+    }));
+  }, [images]);
 
   const coverMapRaw = {
     new_arrivals: "/assets/Gallery/covers/new-arrivals.jpeg",

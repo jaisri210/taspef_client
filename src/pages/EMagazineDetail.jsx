@@ -1,7 +1,7 @@
 // client/src/pages/EMagazineDetail.jsx
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import api, { resolveAssetUrl } from "../services/api";
 
 export default function EMagazineDetail() {
   const { id } = useParams();
@@ -15,19 +15,17 @@ export default function EMagazineDetail() {
     let mounted = true;
     if (mag) {
       setLoading(false);
-      return;
+      return undefined;
     }
-    async function load() {
-      try {
-        const res = await axios.get(`/api/emagazines/${id}`);
-        if (mounted) setMag(res.data);
-      } catch (err) {
-        console.error("Failed to load magazine", err);
-      } finally {
+    api
+      .get(`/emagazines/${id}`)
+      .then((data) => {
+        if (mounted) setMag(data);
+      })
+      .catch((err) => console.error("Failed to load magazine", err))
+      .finally(() => {
         if (mounted) setLoading(false);
-      }
-    }
-    load();
+      });
     return () => {
       mounted = false;
     };
@@ -36,7 +34,7 @@ export default function EMagazineDetail() {
   if (loading) return <div className="text-center py-20">Loading…</div>;
   if (!mag) return <div className="text-center py-20">Magazine not found.</div>;
 
-  const fileUrl = mag.fileUrl; // should be like '/uploads/mag-1.pdf' or absolute URL
+  const fileUrl = resolveAssetUrl(mag.fileUrl);
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-6xl">

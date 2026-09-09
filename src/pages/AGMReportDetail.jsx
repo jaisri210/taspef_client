@@ -1,7 +1,7 @@
 // client/src/pages/AGMReportDetail.jsx
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import REPORTS from "../data/reports";
+import api, { resolveAssetUrl } from "../services/api";
 
 const FALLBACK_REPORT = {
   title: "Minutes of the Annual General Body Meeting",
@@ -23,10 +23,22 @@ export default function AGMReportDetail() {
   const [loading, setLoading] = useState(!report);
 
   useEffect(() => {
-    if (report) return setLoading(false);
-    const found = REPORTS.find((r) => String(r._id) === String(id));
-    setReport(found || FALLBACK_REPORT);
-    setLoading(false);
+    if (report) return undefined;
+    let mounted = true;
+    api
+      .get(`/agm-reports/${id}`)
+      .then((data) => {
+        if (mounted) setReport(data);
+      })
+      .catch(() => {
+        if (mounted) setReport(FALLBACK_REPORT);
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => {
+      mounted = false;
+    };
   }, [id, report]);
 
   const handleBack = () => navigate(-1);
@@ -70,7 +82,7 @@ export default function AGMReportDetail() {
       {report.fileUrl ? (
         <section className="bg-white rounded-lg shadow p-4">
           <iframe
-            src={`/${report.fileUrl}`}
+            src={resolveAssetUrl(report.fileUrl)}
             title={report.title}
             width="100%"
             height="900"

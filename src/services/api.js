@@ -2,6 +2,25 @@ import axios from 'axios'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
 
+// Origin of the API server, without the trailing /api — e.g.
+// 'http://localhost:5000' in dev. Used to resolve uploaded-file URLs,
+// which live under that origin's /uploads, not the frontend's own origin.
+export const ASSET_BASE_URL = API_BASE_URL.replace(/\/?api\/?$/, '')
+
+// Resolves a fileUrl/coverUrl/imageUrl coming back from the API into
+// something a browser can actually fetch. Two kinds show up:
+//  - "uploads/xyz.pdf" — server-hosted, needs the API origin prefixed
+//  - "assets/xyz.pdf"  — a static asset shipped in the client's own
+//    public/ folder (legacy content imported by the seed scripts),
+//    resolved relative to whatever origin the site itself is on
+export function resolveAssetUrl(url) {
+  if (!url) return null
+  if (url.startsWith('http')) return url
+  const clean = url.replace(/^\/+/, '')
+  if (clean.startsWith('assets/')) return `/${clean}`
+  return `${ASSET_BASE_URL}/${clean}`
+}
+
 // Create axios instance with default config
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -11,14 +30,13 @@ const api = axios.create({
   timeout: 30000, // 30 seconds
 })
 
-// Request interceptor
+// Request interceptor — attaches the admin session token, if any
 api.interceptors.request.use(
   (config) => {
-    // You can add auth tokens here if needed
-    // const token = localStorage.getItem('token')
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`
-    // }
+    const token = localStorage.getItem('taspef_admin_token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (error) => {
@@ -33,14 +51,22 @@ api.interceptors.response.use(
   },
   (error) => {
     // Handle errors globally
-    const errorMessage = error.response?.data?.error?.message || error.message || 'An error occurred'
-    
+    const errorMessage = error.response?.data?.error?.message || error.response?.data?.message || error.message || 'An error occurred'
+
     console.error('API Error:', {
       status: error.response?.status,
       message: errorMessage,
       url: error.config?.url,
     })
-    
+
+    if (error.response?.status === 401) {
+      localStorage.removeItem('taspef_admin_token')
+      localStorage.removeItem('taspef_admin_user')
+      if (window.location.pathname.startsWith('/admin') && window.location.pathname !== '/admin/login') {
+        window.location.href = '/admin/login'
+      }
+    }
+
     return Promise.reject({
       status: error.response?.status,
       message: errorMessage,

@@ -1,7 +1,7 @@
 // client/src/pages/Members.jsx
-import React, { useMemo } from "react";
-import membersData from "../data/members.json";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import api from "../services/api";
 
 function formatDate(raw) {
   if (!raw) return "";
@@ -59,11 +59,13 @@ function formatDate(raw) {
 
 export default function Members() {
   const { t } = useTranslation();
-  // sort by id ascending
-  const members = useMemo(() => {
-    const arr = Array.isArray(membersData) ? [...membersData] : [];
-    arr.sort((a, b) => Number(a.id ?? a._id ?? 0) - Number(b.id ?? b._id ?? 0));
-    return arr;
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    api
+      .get("/register-members")
+      .then((data) => setMembers(Array.isArray(data) ? data : []))
+      .catch((err) => console.error("Failed to load members:", err));
   }, []);
 
   return (

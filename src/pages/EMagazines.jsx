@@ -3,39 +3,38 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditorialBoard from "../components/EditorialBoard";
 import { useTranslation } from "react-i18next";
-
-// Mock data (adjust fileUrl to match public folder: /assets or /uploads)
-const MAGAZINES = Array.from({ length: 14 }).map((_, i) => {
-  const n = i + 1;
-  return {
-    _id: String(n),
-    title: `Namathu Vanam - Issue ${n}`,
-    date: `Year ${2016 + i}`,
-    fileUrl: `/assets/Issue-${n}.pdf`, // adjust to /uploads/... if you use that
-    coverUrl: `/assets/images/i-${n}.png`,
-    originalName: `Issue-${n}.pdf`,
-  };
-});
+import api, { resolveAssetUrl } from "../services/api";
 
 export default function EMagazines() {
   const { t } = useTranslation();
   const [mags, setMags] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [sortType, setSortType] = useState("latest"); // "latest" or "previous"
   const navigate = useNavigate();
 
   useEffect(() => {
-    setMags(MAGAZINES);
+    let mounted = true;
+    api
+      .get("/emagazines")
+      .then((data) => {
+        if (mounted) setMags(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => console.error("Failed to load e-magazines:", err))
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const openDetail = (mag) => {
-    // if you have a detail route; otherwise open PDF
-    // navigate(`/e-magazines/${mag._id}`, { state: { mag } });
-    window.open(mag.fileUrl, "_blank");
+    window.open(resolveAssetUrl(mag.fileUrl), "_blank");
   };
 
   // Robust download that checks server response and content-type
   const download = async (mag) => {
-    const url = mag.fileUrl;
+    const url = resolveAssetUrl(mag.fileUrl);
     try {
       const res = await fetch(url);
       if (!res.ok) {
@@ -78,10 +77,10 @@ export default function EMagazines() {
   };
 
   // derived sets
-  const latestIssue = mags.find((m) => m._id === "14");
+  const latestIssue = mags.find((m) => m.isLatest) || mags[0];
   const previousIssues = mags
-    .filter((m) => m._id !== "14")
-    .sort((a, b) => Number(b._id) - Number(a._id));
+    .filter((m) => m._id !== latestIssue?._id)
+    .sort((a, b) => (b.issueNumber || 0) - (a.issueNumber || 0));
 
   return (
     <div className="flex items-start gap-6">
@@ -101,15 +100,16 @@ export default function EMagazines() {
           </select>
         </div>
 
+        {loading && <div className="text-slate-600">{t("loading")}…</div>}
+
         {/* show only latest */}
-        {sortType === "latest" && latestIssue && (
+        {!loading && sortType === "latest" && latestIssue && (
           <div className="max-w-md">
             <div className="bg-white rounded-lg shadow hover:shadow-lg overflow-hidden">
               <div className="h-60 bg-gray-100 flex items-center justify-center text-gray-700">
-                {/* show cover if available */}
                 {latestIssue.coverUrl ? (
                   <img
-                    src={latestIssue.coverUrl}
+                    src={resolveAssetUrl(latestIssue.coverUrl)}
                     alt={latestIssue.title}
                     className="w-full h-full object-fill"
                   />
@@ -144,7 +144,7 @@ export default function EMagazines() {
         )}
 
         {/* show previous issues in a compact accordion */}
-        {sortType === "previous" && (
+        {!loading && sortType === "previous" && (
           <div className="mt-4">
             <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {previousIssues.map((mag) => (
@@ -155,7 +155,7 @@ export default function EMagazines() {
                   <div className="relative h-48 bg-gray-100 flex items-center justify-center">
                     {mag.coverUrl ? (
                       <img
-                        src={mag.coverUrl}
+                        src={resolveAssetUrl(mag.coverUrl)}
                         alt={mag.title}
                         className="w-full h-full object-cover"
                       />
