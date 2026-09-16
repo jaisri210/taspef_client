@@ -5,7 +5,7 @@ import axios from 'axios'
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.PROD
-    ? 'https://taspef-taspef.onrender.com'
+    ? 'https://taspef-taspef.onrender.com/api'
     : 'http://localhost:5000/api')
 
 // Origin of the API server, without the trailing /api — e.g.
