@@ -19,7 +19,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "https://apitaspef.taspef.org/",
+        target: "https://apitaspef.taspef.org/","https://taspef-taspef.onrender.com"
         changeOrigin: true,
       },
     },
