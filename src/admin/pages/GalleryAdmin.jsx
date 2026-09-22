@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import api from "../../services/api";
+import api, { resolveAssetUrl } from "../../services/api";
 import { useToast } from "../../context/ToastContext";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
@@ -146,7 +146,7 @@ export default function GalleryAdmin() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {list.map((img, idx) => (
               <div key={img._id} className="bg-white rounded-lg shadow overflow-hidden">
-                <img src={img.imageUrl} alt={img.caption || ""} className="w-full h-28 object-cover" />
+                <img src={resolveAssetUrl(img.imageUrl)} alt={img.caption || ""} className="w-full h-28 object-cover" />
                 <div className="p-2">
                   {img.caption && <p className="text-xs text-slate-600 truncate">{img.caption}</p>}
                   <div className="flex items-center justify-between mt-1">

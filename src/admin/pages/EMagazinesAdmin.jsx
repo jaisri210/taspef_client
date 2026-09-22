@@ -1,5 +1,6 @@
 import ResourcePage from "../components/ResourcePage";
 import { createResourceApi } from "../api/resourceApi";
+import { resolveAssetUrl } from "../../services/api";
 
 const resourceApi = createResourceApi("/emagazines", ["file", "cover"]);
 
@@ -9,7 +10,7 @@ const columns = [
     label: "Cover",
     render: (r) =>
       r.coverUrl ? (
-        <img src={r.coverUrl} alt="" className="w-10 h-14 object-cover rounded" />
+        <img src={resolveAssetUrl(r.coverUrl)} alt="" className="w-10 h-14 object-cover rounded" />
       ) : (
         "—"
       ),
@@ -27,7 +28,7 @@ const columns = [
     label: "File",
     render: (r) =>
       r.fileUrl ? (
-        <a href={r.fileUrl} target="_blank" rel="noreferrer" className="text-primary-600 hover:underline">
+        <a href={resolveAssetUrl(r.fileUrl)} target="_blank" rel="noreferrer" className="text-primary-600 hover:underline">
           {r.originalName || "View PDF"}
         </a>
       ) : (

@@ -1,5 +1,6 @@
 import ResourcePage from "../components/ResourcePage";
 import { createResourceApi } from "../api/resourceApi";
+import { resolveAssetUrl } from "../../services/api";
 
 const resourceApi = createResourceApi("/agm-reports", ["file"]);
 
@@ -17,7 +18,7 @@ const columns = [
     render: (r) =>
       r.fileUrl ? (
         <a
-          href={r.fileUrl.startsWith("http") ? r.fileUrl : `/${r.fileUrl}`}
+          href={resolveAssetUrl(r.fileUrl)}
           target="_blank"
           rel="noreferrer"
           className="text-primary-600 hover:underline"
