@@ -16,6 +16,7 @@ export default function GalleryAdmin() {
   const [submitting, setSubmitting] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [editing, setEditing] = useState(null); // gallery image being edited, or null for "add new"
   const [form, setForm] = useState({ category: "", caption: "", image: null });
 
   const load = useCallback(async () => {
@@ -49,9 +50,21 @@ export default function GalleryAdmin() {
     return Array.from(set);
   }, [grouped]);
 
+  const openAdd = () => {
+    setEditing(null);
+    setForm({ category: "", caption: "", image: null });
+    setUploadOpen(true);
+  };
+
+  const openEdit = (img) => {
+    setEditing(img);
+    setForm({ category: img.category, caption: img.caption || "", image: null });
+    setUploadOpen(true);
+  };
+
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!form.image || !form.category) {
+    if (!form.category || (!editing && !form.image)) {
       push("Category and image are required", "error");
       return;
     }
@@ -60,14 +73,20 @@ export default function GalleryAdmin() {
       const fd = new FormData();
       fd.append("category", form.category.trim());
       fd.append("caption", form.caption);
-      fd.append("image", form.image);
-      await api.post("/gallery", fd, { headers: { "Content-Type": "multipart/form-data" } });
-      push("Photo uploaded");
+      if (form.image) fd.append("image", form.image);
+      if (editing) {
+        await api.put(`/gallery/${editing._id}`, fd, { headers: { "Content-Type": "multipart/form-data" } });
+        push("Photo updated");
+      } else {
+        await api.post("/gallery", fd, { headers: { "Content-Type": "multipart/form-data" } });
+        push("Photo uploaded");
+      }
       setUploadOpen(false);
+      setEditing(null);
       setForm({ category: "", caption: "", image: null });
       load();
     } catch (err) {
-      push(err.message || "Upload failed", "error");
+      push(err.message || (editing ? "Update failed" : "Upload failed"), "error");
     } finally {
       setSubmitting(false);
     }
@@ -127,7 +146,7 @@ export default function GalleryAdmin() {
             Photos shown on the public gallery page, grouped by category.
           </p>
         </div>
-        <Button variant="primary" onClick={() => setUploadOpen(true)}>
+        <Button variant="primary" onClick={openAdd}>
           + Upload Photo
         </Button>
       </div>
@@ -168,12 +187,20 @@ export default function GalleryAdmin() {
                         ↓
                       </button>
                     </div>
-                    <button
-                      onClick={() => setPendingDelete(img)}
-                      className="text-xs text-red-600 hover:text-red-800"
-                    >
-                      Delete
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => openEdit(img)}
+                        className="text-xs text-primary-600 hover:text-primary-800"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => setPendingDelete(img)}
+                        className="text-xs text-red-600 hover:text-red-800"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -182,7 +209,14 @@ export default function GalleryAdmin() {
         </section>
       ))}
 
-      <Modal isOpen={uploadOpen} onClose={() => setUploadOpen(false)} title="Upload Photo">
+      <Modal
+        isOpen={uploadOpen}
+        onClose={() => {
+          setUploadOpen(false);
+          setEditing(null);
+        }}
+        title={editing ? "Edit Photo" : "Upload Photo"}
+      >
         <form onSubmit={handleUpload} className="space-y-4">
           <div>
             <label htmlFor="category" className="block text-sm font-medium text-slate-700 mb-1">
@@ -216,23 +250,37 @@ export default function GalleryAdmin() {
           </div>
           <div>
             <label htmlFor="image" className="block text-sm font-medium text-slate-700 mb-1">
-              Image <span className="text-red-500">*</span>
+              Image {editing ? "(leave blank to keep current)" : <span className="text-red-500">*</span>}
             </label>
+            {editing && (
+              <img
+                src={resolveAssetUrl(editing.imageUrl)}
+                alt=""
+                className="w-24 h-16 object-cover rounded mb-2 border"
+              />
+            )}
             <input
               id="image"
               type="file"
               accept="image/*"
-              required
+              required={!editing}
               onChange={(e) => setForm((f) => ({ ...f, image: e.target.files?.[0] || null }))}
               className="block w-full text-sm text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
             />
           </div>
           <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
-            <Button variant="outline" type="button" onClick={() => setUploadOpen(false)}>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => {
+                setUploadOpen(false);
+                setEditing(null);
+              }}
+            >
               Cancel
             </Button>
             <Button variant="primary" type="submit" loading={submitting}>
-              Upload
+              {editing ? "Save" : "Upload"}
             </Button>
           </div>
         </form>
