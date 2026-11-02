@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import api, { resolveAssetUrl } from "../services/api";
 
+const ANNOUNCEMENT_IMAGE = "/assets/announcements/agm-xv-invite.png";
+
 export default function AGMReports() {
   const { t } = useTranslation();
   const [reports, setReports] = useState([]);
@@ -38,6 +40,22 @@ export default function AGMReports() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-6">{t("agm_reports")}</h2>
+
+      {/* Current announcement poster. Replace public/assets/announcements/agm-xv-invite.png to update it. */}
+      <div className="mb-8 flex justify-center">
+        <a
+          href={ANNOUNCEMENT_IMAGE}
+          target="_blank"
+          rel="noreferrer"
+          className="block max-w-xl"
+        >
+          <img
+            src={ANNOUNCEMENT_IMAGE}
+            alt="TASPEF XV Annual General Body Meeting invitation"
+            className="w-full rounded-lg shadow-lg"
+          />
+        </a>
+      </div>
 
       {loading ? (
         <div className="text-slate-600">{t("loading")}…</div>
